@@ -20,6 +20,8 @@ namespace ThamCoCustomerProductService.Data
         public int ProductId { get; set; }
         [Required]
         public double Price { get; set; }
+        [Required]
+        public int StockLevel { get; set; }
         public Company Company { get; set; }
         public Product Product { get; set; }
 

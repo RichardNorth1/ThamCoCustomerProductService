@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ThamCoCustomerProductService.Dtos;
 using ThamCoCustomerProductService.Services;
@@ -7,6 +8,7 @@ using ThamCoCustomerProductService.Services;
 
 namespace ThamCoCustomerProductService.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -19,10 +21,12 @@ namespace ThamCoCustomerProductService.Controllers
         {
             _productService = productService;
             _mapper = mapper;
+
         }
 
         // GET: api/Products
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<CompanyDto>>> GetProducts()
         {
             try
@@ -41,6 +45,7 @@ namespace ThamCoCustomerProductService.Controllers
         }
 
         // GET api/<ProductsController>/5
+        [Authorize]
         [HttpGet("{productId}")]
         public async Task<ActionResult<CompanyDto>> GetProduct(int productId)
         {
@@ -61,6 +66,7 @@ namespace ThamCoCustomerProductService.Controllers
         }
 
         // POST api/<ProductsController>
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<CompanyDto>> PostProduct(ProductDto product)
         {
@@ -79,6 +85,7 @@ namespace ThamCoCustomerProductService.Controllers
         }
 
         // PUT api/<ProductsController>/5
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(ProductDto product)
         {
@@ -105,6 +112,7 @@ namespace ThamCoCustomerProductService.Controllers
         }
 
         // DELETE api/<ProductsController>/5
+        [Authorize]
         [HttpDelete("{productId}")]
         public async Task<IActionResult> DeleteCompany(int productId)
         {

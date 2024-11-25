@@ -67,11 +67,12 @@ namespace ThamCoCustomerProductService.Repositiory
 
 
             companyProductOld.Price = companyProduct.Price;
+            companyProductOld.StockLevel = companyProduct.StockLevel;
 
 
-            _context.Update(companyProductOld); // Update the retrieved customer object
+            _context.Update(companyProductOld);
             await _context.SaveChangesAsync();
-            return companyProductOld; // Return the updated customer
+            return companyProductOld;
         }
     }
 }
