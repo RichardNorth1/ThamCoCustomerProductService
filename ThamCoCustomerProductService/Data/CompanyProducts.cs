@@ -9,11 +9,12 @@ namespace ThamCoCustomerProductService.Data
         {
         }
 
-        public CompanyProducts(int companyId, int productId, double price)
+        public CompanyProducts(int companyId, int productId, double price, int stockLevel)
         {
             CompanyId = companyId;
             ProductId = productId;
             Price = price;
+            StockLevel = stockLevel;
         }
 
         public int CompanyId { get; set; }
