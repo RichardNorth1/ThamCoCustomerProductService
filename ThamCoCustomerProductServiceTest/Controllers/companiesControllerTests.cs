@@ -21,6 +21,7 @@ namespace ThamCoCustomerProductService.Tests.Controllers
         [SetUp]
         public void SetUp()
         {
+
             _mockCompanyService = new Mock<ICompanyService>();
             _mockMapper = new Mock<IMapper>();
             _controller = new CompaniesController(_mockCompanyService.Object, _mockMapper.Object);
