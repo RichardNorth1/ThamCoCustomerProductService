@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Numerics;
 using ThamCoCustomerProductService.Data;
 
 namespace ThamCoCustomerProductService.Repositiory
@@ -70,9 +68,9 @@ namespace ThamCoCustomerProductService.Repositiory
             companyOld.Email = company.Email;
             companyOld.Name = company.Name;
 
-            _context.Update(companyOld); // Update the retrieved customer object
+            _context.Update(companyOld);
             await _context.SaveChangesAsync();
-            return companyOld; // Return the updated customer
+            return companyOld;
         }
     }
 }
