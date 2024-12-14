@@ -29,14 +29,18 @@ namespace ThamCoCustomerProductService.Tests.Controllers
         [Test]
         public async Task GetCompanyProducts_ReturnsOkResult_WithListOfCompanyProducts()
         {
-            // Arrange
-            var companyProducts = new List<CompanyProductsDto> { new CompanyProductsDto { CompanyId = 1, ProductId = 1 } };
+            var companyProducts = new List<CompanyProductsDto> { 
+                new CompanyProductsDto {
+                    CompanyId = 1,
+                    ProductId = 1,
+                    Price = 10,
+                    StockLevel = 10
+                } 
+            };
             _mockCompanyProductsService.Setup(service => service.GetCompanyProducts()).ReturnsAsync(companyProducts);
 
-            // Act
             var result = await _controller.GetCompanyProducts();
 
-            // Assert
             Assert.IsInstanceOf<OkObjectResult>(result.Result);
             var okResult = result.Result as OkObjectResult;
             Assert.IsNotNull(okResult);
@@ -46,14 +50,17 @@ namespace ThamCoCustomerProductService.Tests.Controllers
         [Test]
         public async Task GetCompanyProduct_ReturnsOkResult_WithCompanyProduct()
         {
-            // Arrange
-            var companyProduct = new CompanyProductsDto { CompanyId = 1, ProductId = 1 };
+            var companyProduct = new CompanyProductsDto
+            {
+                CompanyId = 1,
+                ProductId = 1,
+                Price = 10,
+                StockLevel = 10
+            };
             _mockCompanyProductsService.Setup(service => service.GetCompanyProductById(1, 1)).ReturnsAsync(companyProduct);
 
-            // Act
             var result = await _controller.GetCompanyProduct(1, 1);
 
-            // Assert
             Assert.IsInstanceOf<OkObjectResult>(result.Result);
             var okResult = result.Result as OkObjectResult;
             Assert.IsNotNull(okResult);
@@ -63,14 +70,17 @@ namespace ThamCoCustomerProductService.Tests.Controllers
         [Test]
         public async Task PostCompanyProduct_ReturnsCreatedAtActionResult_WithCompanyProduct()
         {
-            // Arrange
-            var companyProduct = new CompanyProductsDto { CompanyId = 1, ProductId = 1 };
+            var companyProduct = new CompanyProductsDto
+            {
+                CompanyId = 1,
+                ProductId = 1,
+                Price = 10,
+                StockLevel = 10
+            };
             _mockCompanyProductsService.Setup(service => service.CreateCompanyProduct(companyProduct)).Returns(Task.CompletedTask);
 
-            // Act
             var result = await _controller.PostCompanyProduct(companyProduct);
 
-            // Assert
             Assert.IsInstanceOf<CreatedAtActionResult>(result.Result);
             var createdAtActionResult = result.Result as CreatedAtActionResult;
             Assert.IsNotNull(createdAtActionResult);
@@ -80,79 +90,67 @@ namespace ThamCoCustomerProductService.Tests.Controllers
         [Test]
         public async Task DeleteCompany_ReturnsNoContentResult()
         {
-            // Arrange
             _mockCompanyProductsService.Setup(service => service.DeleteCompanyProduct(1, 1)).Returns(Task.CompletedTask);
 
-            // Act
             var result = await _controller.DeleteCompany(1, 1);
 
-            // Assert
             Assert.IsInstanceOf<NoContentResult>(result);
         }
 
         [Test]
         public async Task GetCompanyProducts_ReturnsNotFound_WhenKeyNotFoundExceptionThrown()
         {
-            // Arrange
             _mockCompanyProductsService.Setup(service => service.GetCompanyProducts()).ThrowsAsync(new KeyNotFoundException());
 
-            // Act
             var result = await _controller.GetCompanyProducts();
 
-            // Assert
             Assert.IsInstanceOf<NotFoundObjectResult>(result.Result);
         }
 
         [Test]
         public async Task GetCompanyProduct_ReturnsNotFound_WhenKeyNotFoundExceptionThrown()
         {
-            // Arrange
             _mockCompanyProductsService.Setup(service => service.GetCompanyProductById(1, 1)).ThrowsAsync(new KeyNotFoundException());
 
-            // Act
             var result = await _controller.GetCompanyProduct(1, 1);
 
-            // Assert
             Assert.IsInstanceOf<NotFoundObjectResult>(result.Result);
         }
 
         [Test]
         public async Task PostCompanyProduct_ReturnsBadRequest_WhenExceptionThrown()
         {
-            // Arrange
-            var companyProduct = new CompanyProductsDto { CompanyId = 1, ProductId = 1 };
+            var companyProduct = new CompanyProductsDto
+            {
+                CompanyId = 1,
+                ProductId = 1,
+                Price = 10,
+                StockLevel = 10
+            };
             _mockCompanyProductsService.Setup(service => service.CreateCompanyProduct(companyProduct)).ThrowsAsync(new Exception("Error"));
 
-            // Act
             var result = await _controller.PostCompanyProduct(companyProduct);
 
-            // Assert
             Assert.IsInstanceOf<BadRequestObjectResult>(result.Result);
         }
 
         [Test]
         public async Task DeleteCompany_ReturnsNotFound_WhenKeyNotFoundExceptionThrown()
         {
-            // Arrange
             _mockCompanyProductsService.Setup(service => service.DeleteCompanyProduct(1, 1)).ThrowsAsync(new KeyNotFoundException());
 
-            // Act
             var result = await _controller.DeleteCompany(1, 1);
 
-            // Assert
             Assert.IsInstanceOf<NotFoundObjectResult>(result);
         }
 
         [Test]
         public async Task DeleteCompany_ReturnsBadRequest_WhenExceptionThrown()
         {
-            // Arrange
             _mockCompanyProductsService.Setup(service => service.DeleteCompanyProduct(1, 1)).ThrowsAsync(new Exception("Error"));
 
-            // Act
             var result = await _controller.DeleteCompany(1, 1);
 
-            // Assert
             Assert.IsInstanceOf<BadRequestObjectResult>(result);
         }
     }

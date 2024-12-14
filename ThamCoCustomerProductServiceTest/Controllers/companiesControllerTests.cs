@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using ThamCoCustomerProductService.Controllers;
 using ThamCoCustomerProductService.Dtos;
@@ -29,14 +31,19 @@ namespace ThamCoCustomerProductService.Tests.Controllers
         [Test]
         public async Task GetCompanies_ReturnsOkResult_WithListOfCompanies()
         {
-            // Arrange
-            var companies = new List<CompanyDto> { new CompanyDto { CompanyId = 1, Name = "Test Company" } };
+            var companies = new List<CompanyDto> {
+                new CompanyDto {
+                    CompanyId = 1,
+                    Name = "Test name",
+                    Address = "Test Address",
+                    Phone = "01642 666666",
+                    Email = "Test@email,com"
+                } 
+            };
             _mockCompanyService.Setup(service => service.GetCompanies()).ReturnsAsync(companies);
 
-            // Act
             var result = await _controller.GetCompanies();
 
-            // Assert
             Assert.IsInstanceOf<OkObjectResult>(result.Result);
             var okResult = result.Result as OkObjectResult;
             Assert.IsNotNull(okResult);
@@ -46,14 +53,18 @@ namespace ThamCoCustomerProductService.Tests.Controllers
         [Test]
         public async Task GetCompany_ReturnsOkResult_WithCompany()
         {
-            // Arrange
-            var company = new CompanyDto { CompanyId = 1, Name = "Test Company" };
+            var company = new CompanyDto
+            {
+                CompanyId = 1,
+                Name = "Test name",
+                Address = "Test Address",
+                Phone = "01642 666666",
+                Email = "Test@email,com"
+            };
             _mockCompanyService.Setup(service => service.GetCompanyById(1)).ReturnsAsync(company);
 
-            // Act
             var result = await _controller.GetCompany(1);
 
-            // Assert
             Assert.IsInstanceOf<OkObjectResult>(result.Result);
             var okResult = result.Result as OkObjectResult;
             Assert.IsNotNull(okResult);
@@ -63,14 +74,18 @@ namespace ThamCoCustomerProductService.Tests.Controllers
         [Test]
         public async Task PostCompany_ReturnsCreatedAtActionResult_WithCompany()
         {
-            // Arrange
-            var company = new CompanyDto { CompanyId = 1, Name = "Test Company" };
+            var company = new CompanyDto
+            {
+                CompanyId = 1,
+                Name = "Test name",
+                Address = "Test Address",
+                Phone = "01642 666666",
+                Email = "Test@email,com"
+            };
             _mockCompanyService.Setup(service => service.CreateCompany(company)).Returns(Task.CompletedTask);
 
-            // Act
             var result = await _controller.PostCompany(company);
 
-            // Assert
             Assert.IsInstanceOf<CreatedAtActionResult>(result.Result);
             var createdAtActionResult = result.Result as CreatedAtActionResult;
             Assert.IsNotNull(createdAtActionResult);
@@ -80,27 +95,28 @@ namespace ThamCoCustomerProductService.Tests.Controllers
         [Test]
         public async Task PutCompany_ReturnsNoContentResult()
         {
-            // Arrange
-            var company = new CompanyDto { CompanyId = 1, Name = "Test Company" };
+            var company = new CompanyDto
+            {
+                CompanyId = 1,
+                Name = "Test name",
+                Address = "Test Address",
+                Phone = "01642 666666",
+                Email = "Test@email,com"
+            };
             _mockCompanyService.Setup(service => service.UpdateCompany(company)).Returns(Task.CompletedTask);
 
-            // Act
             var result = await _controller.PutCompany(company);
 
-            // Assert
             Assert.IsInstanceOf<NoContentResult>(result);
         }
 
         [Test]
         public async Task DeleteCompany_ReturnsNoContentResult()
         {
-            // Arrange
             _mockCompanyService.Setup(service => service.DeleteCompany(1)).Returns(Task.CompletedTask);
 
-            // Act
             var result = await _controller.DeleteCompany(1);
 
-            // Assert
             Assert.IsInstanceOf<NoContentResult>(result);
         }
     }
