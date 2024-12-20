@@ -69,7 +69,6 @@ namespace ThamCoCustomerProductService.Tests.Controllers
             Assert.IsNotNull(okResult);
             Assert.AreEqual(product, okResult.Value);
         }
-
         [Test]
         public async Task PostProduct_ReturnsCreatedAtActionResult_WithProduct()
         {
@@ -81,7 +80,7 @@ namespace ThamCoCustomerProductService.Tests.Controllers
                 Description = "Test Description",
                 ImageUrl = "Test Image url"
             };
-            _mockProductService.Setup(service => service.CreateProduct(product)).Returns(Task.CompletedTask);
+            _mockProductService.Setup(service => service.CreateProduct(product)).ReturnsAsync(product);
 
             var result = await _controller.PostProduct(product);
 
@@ -90,6 +89,7 @@ namespace ThamCoCustomerProductService.Tests.Controllers
             Assert.IsNotNull(createdAtActionResult);
             Assert.AreEqual(product, createdAtActionResult.Value);
         }
+
 
         [Test]
         public async Task PutProduct_ReturnsNoContentResult()

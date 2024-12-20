@@ -15,10 +15,12 @@ namespace ThamCoCustomerProductService.Services
             _companyProductsRepository = companyProductsRepository;
             _mapper = mapper;
         }
-        public async Task CreateCompanyProduct(CompanyProductsDto companyProducDto)
+        public async Task<CompanyProductsDto> CreateCompanyProduct(CompanyProductsDto companyProducDto)
         {
             var companyProduct = _mapper.Map<CompanyProducts>(companyProducDto);
-            await _companyProductsRepository.CreateCompanyProducts(companyProduct);
+            var companyProductData = await _companyProductsRepository.CreateCompanyProducts(companyProduct);
+            companyProducDto = _mapper.Map<CompanyProductsDto>(companyProductData);
+            return companyProducDto;
         }
 
         public async Task DeleteCompanyProduct(int companyid, int productId)

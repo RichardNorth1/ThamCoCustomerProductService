@@ -51,7 +51,6 @@ namespace ThamCoCustomerProductService.Controllers
             {
                 var company = await _companyService.GetCompanyById(companyId);
                 return Ok(company);
-
             }
             catch (KeyNotFoundException x)
             {
@@ -63,6 +62,7 @@ namespace ThamCoCustomerProductService.Controllers
             }
         }
 
+
         // POST api/Companies
         [Authorize]
         [HttpPost]
@@ -70,10 +70,10 @@ namespace ThamCoCustomerProductService.Controllers
         {
             try
             {
-                await _companyService.CreateCompany(company);
+                var createdCompany = await _companyService.CreateCompany(company);
 
-                // Return 201 Created with the customer details
-                return CreatedAtAction(nameof(GetCompany), new { id = company.CompanyId }, company);
+                // Return 201 Created with the company details
+                return CreatedAtAction(nameof(GetCompany), new { companyId = createdCompany.CompanyId }, createdCompany);
             }
             catch (Exception ex)
             {
@@ -81,6 +81,7 @@ namespace ThamCoCustomerProductService.Controllers
                 return BadRequest("Failed to create the company: " + ex.Message);
             }
         }
+
 
         // PUT api/Companies/5
         [Authorize]

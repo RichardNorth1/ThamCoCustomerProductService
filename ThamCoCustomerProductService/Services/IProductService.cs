@@ -6,7 +6,7 @@ namespace ThamCoCustomerProductService.Services
     {
         public Task<IEnumerable<ProductDto>> GetProducts();
         public Task<ProductDto> GetProductById(int productId);
-        public Task CreateProduct(ProductDto productDto);
+        public Task<ProductDto> CreateProduct(ProductDto productDto);
         public Task UpdateProduct(ProductDto productDto);
         public Task DeleteProduct(int productId);
     }

@@ -80,9 +80,9 @@ namespace ThamCoCustomerProductService.Tests.Controllers
                 Name = "Test name",
                 Address = "Test Address",
                 Phone = "01642 666666",
-                Email = "Test@email,com"
+                Email = "Test@email.com"
             };
-            _mockCompanyService.Setup(service => service.CreateCompany(company)).Returns(Task.CompletedTask);
+            _mockCompanyService.Setup(service => service.CreateCompany(company)).ReturnsAsync(company);
 
             var result = await _controller.PostCompany(company);
 
@@ -91,6 +91,7 @@ namespace ThamCoCustomerProductService.Tests.Controllers
             Assert.IsNotNull(createdAtActionResult);
             Assert.AreEqual(company, createdAtActionResult.Value);
         }
+
 
         [Test]
         public async Task PutCompany_ReturnsNoContentResult()

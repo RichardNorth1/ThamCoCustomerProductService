@@ -15,8 +15,16 @@ namespace ThamCoCustomerProductService.Repositiory
 
         public async Task<Product> CreateProduct(Product product)
         {
+
             _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
             return product;
         }
 

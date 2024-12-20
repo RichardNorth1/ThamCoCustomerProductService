@@ -72,10 +72,10 @@ namespace ThamCoCustomerProductService.Controllers
         {
             try
             {
-                await _productService.CreateProduct(product);
+                var createdProduct = await _productService.CreateProduct(product);
 
                 // Return 201 Created with the customer details
-                return CreatedAtAction(nameof(GetProduct), new { id = product.ProductId }, product);
+                return CreatedAtAction(nameof(GetProduct), new { productId = createdProduct.ProductId }, createdProduct);
             }
             catch (Exception ex)
             {

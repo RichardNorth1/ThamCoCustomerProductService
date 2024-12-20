@@ -74,10 +74,10 @@ namespace ThamCoCustomerProductService.Tests.Controllers
             {
                 CompanyId = 1,
                 ProductId = 1,
-                Price = 10,
+                Price = 100.0,
                 StockLevel = 10
             };
-            _mockCompanyProductsService.Setup(service => service.CreateCompanyProduct(companyProduct)).Returns(Task.CompletedTask);
+            _mockCompanyProductsService.Setup(service => service.CreateCompanyProduct(companyProduct)).ReturnsAsync(companyProduct);
 
             var result = await _controller.PostCompanyProduct(companyProduct);
 
@@ -86,6 +86,8 @@ namespace ThamCoCustomerProductService.Tests.Controllers
             Assert.IsNotNull(createdAtActionResult);
             Assert.AreEqual(companyProduct, createdAtActionResult.Value);
         }
+
+
 
         [Test]
         public async Task DeleteCompany_ReturnsNoContentResult()

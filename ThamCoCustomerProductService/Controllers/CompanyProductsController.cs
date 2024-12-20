@@ -45,13 +45,12 @@ namespace ThamCoCustomerProductService.Controllers
         // GET api/CompanyProducts/5
         [Authorize]
         [HttpGet("{companyId}/{productId}")]
-        public async Task<ActionResult<CompanyDto>> GetCompanyProduct(int companyId, int productId)
+        public async Task<ActionResult<CompanyProductsDto>> GetCompanyProduct(int companyId, int productId)
         {
             try
             {
                 var companyProduct = await _companyProductsService.GetCompanyProductById(companyId, productId);
                 return Ok(companyProduct);
-
             }
             catch (KeyNotFoundException x)
             {
@@ -63,17 +62,18 @@ namespace ThamCoCustomerProductService.Controllers
             }
         }
 
+
         // POST api/CompanyProducts
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<CompanyDto>> PostCompanyProduct(CompanyProductsDto companyProduct)
+        public async Task<ActionResult<CompanyProductsDto>> PostCompanyProduct(CompanyProductsDto companyProduct)
         {
             try
             {
-                await _companyProductsService.CreateCompanyProduct(companyProduct);
+                var createdCompanyProductDto = await _companyProductsService.CreateCompanyProduct(companyProduct);
 
-                // Return 201 Created with the customer details
-                return CreatedAtAction(nameof(GetCompanyProduct), new { id = companyProduct.CompanyId, companyProduct.ProductId }, companyProduct);
+                // Return 201 Created with the company product details
+                return CreatedAtAction(nameof(GetCompanyProduct), new { companyId = createdCompanyProductDto.CompanyId, productId = createdCompanyProductDto.ProductId }, createdCompanyProductDto);
             }
             catch (Exception ex)
             {
@@ -81,6 +81,7 @@ namespace ThamCoCustomerProductService.Controllers
                 return BadRequest("Failed to create the company product: " + ex.Message);
             }
         }
+
 
         // PUT api/CompanyProducts/5
         [Authorize]
